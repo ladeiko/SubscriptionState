@@ -1,0 +1,39 @@
+PODS:
+  - SubscriptionState (1.0.0):
+    - SwiftSelfAware
+    - TPInAppReceipt
+    - TrueTime
+    - Valet
+  - SwiftSelfAware (1.0.5)
+  - SwiftyStoreKit (0.15.0)
+  - TPInAppReceipt (2.2.3)
+  - TrueTime (5.0.3)
+  - Valet (3.2.6)
+
+DEPENDENCIES:
+  - SubscriptionState (from `..`)
+  - SwiftyStoreKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftSelfAware
+    - SwiftyStoreKit
+    - TPInAppReceipt
+    - TrueTime
+    - Valet
+
+EXTERNAL SOURCES:
+  SubscriptionState:
+    :path: ".."
+
+SPEC CHECKSUMS:
+  SubscriptionState: 1e94b6db34c533027ce6328f82fb8d42953c8f11
+  SwiftSelfAware: a705d6c80fa1ad64e58274f82b74ffee9cdac2a8
+  SwiftyStoreKit: 033d06b6f87955405d3f844a18a7687c2438592a
+  TPInAppReceipt: b6771314a6bd5b5916d0834cb7548aa7b32925cd
+  TrueTime: b49551ffafb28a9dee04e51b226f42a416010842
+  Valet: dcc4ff74f0d010be665239ab89c7a4a5cd39ee33
+
+PODFILE CHECKSUM: d5647ffc5725c6a5bd6bf6033ab4dc196a8b2244
+
+COCOAPODS: 1.7.2
