@@ -102,6 +102,6 @@ Subscription state is saved to keychain. So it is restored each time application
 
 * Siarhei Ladzeika <sergey.ladeiko@gmail.com>
 
-## LINCENSE
+## LICENSE
 
 See [LICENSE](LICENSE)
