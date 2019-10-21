@@ -91,7 +91,7 @@ SubscriptionState.shared.customDateResolver = { () -> Date in
 }
 ```
 
-It is used to determine real time and date when cheking activity of subscription.
+It is used to determine real time and date when checking activity of subscription.
 By default NTP service is used.
 
 #### Persistence
