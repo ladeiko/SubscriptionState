@@ -12,18 +12,37 @@ import StoreKit
 import Valet
 import SwiftSelfAware
 
-extension NSNotification.Name {
-    public static let subscriptionTotalStateDidChange: NSNotification.Name = NSNotification.Name("subscriptionTotalStateDidChange")
-    public static let subscriptionSomeStateDidChange: NSNotification.Name = NSNotification.Name("subscriptionSomeStateDidChange")
+@objc public extension NSNotification {
+    static var SubscriptionTotalStateDidChangeNotification: NSString {
+        return "subscriptionTotalStateDidChange"
+    }
+    static var SubscriptionSomeStateDidChangeNotification: NSString {
+        return "subscriptionSomeStateDidChange"
+    }
+}
+
+public extension NSNotification.Name {
+    static let subscriptionTotalStateDidChange: NSNotification.Name = NSNotification.Name(NSNotification.SubscriptionTotalStateDidChangeNotification as String)
+    static let subscriptionSomeStateDidChange: NSNotification.Name = NSNotification.Name(NSNotification.SubscriptionSomeStateDidChangeNotification as String)
 }
 
 public typealias SubscriptionStateDateResolver = () -> Date
+
+@objc
+public protocol SubscriptionStateObserver: class {
+    @objc
+    optional func subscriptionStateDidChangeTotalState(_ subscriptionState: SubscriptionState)
+    
+    @objc
+    optional func subscriptionStateDidChangeSomeState(_ subscriptionState: SubscriptionState)
+}
 
 @objc
 public class SubscriptionState: NSObject {
     
     // MARK: - Public
     
+    @objc
     public static let subscriptionSomeStateDidChangeProductsKey = "productIdentifiers"
     
     @objc
@@ -49,7 +68,12 @@ public class SubscriptionState: NSObject {
     }
     
     @objc
-    public func isSubscriptionActive(for productIdentifiers: [String]? = nil) -> Bool {
+    public func isSubscriptionActive() -> Bool {
+        return isSubscriptionActive(for: nil)
+    }
+    
+    @objc
+    public func isSubscriptionActive(for productIdentifiers: [String]?) -> Bool {
         return onMain {
             return productIdentifiers == nil ?
                 self.totalSubscribed
@@ -82,6 +106,31 @@ public class SubscriptionState: NSObject {
     public var activeProducts: [String] {
         return onMain {
             return Array(self.subscribed)
+        }
+    }
+    
+    @objc
+    public func addObserver(_ observer: SubscriptionStateObserver) {
+        onMain {
+            self.stateObservers.addPointer(Unmanaged.passUnretained(observer).toOpaque())
+        }
+    }
+    
+    @objc
+    public func removeObserver(_ observer: SubscriptionStateObserver) {
+        onMain {
+            for i in 0..<self.stateObservers.count {
+                
+                guard let pointer = self.stateObservers.pointer(at: i) else {
+                    continue
+                }
+                
+                let obj = Unmanaged<AnyObject>.fromOpaque(pointer).takeUnretainedValue()
+                if obj === observer {
+                    self.stateObservers.removePointer(at: i)
+                    break
+                }
+            }
         }
     }
     
@@ -208,6 +257,7 @@ public class SubscriptionState: NSObject {
         observers?.forEach({ NotificationCenter.default.removeObserver($0) })
     }
 
+    private let stateObservers = NSPointerArray.weakObjects()
     private let purchasesKey = "purchases"
     private let lifetimeProductIdentifiersKey = "lifetimeProductIdentifiers"
     private let valet = Valet.valet(with: Identifier(nonEmpty: "SubscriptionState")!, accessibility: .whenUnlocked)
@@ -236,6 +286,10 @@ public class SubscriptionState: NSObject {
             assert(Thread.isMainThread)
             if oldValue != totalSubscribed {
                 NotificationCenter.default.post(name: .subscriptionTotalStateDidChange, object: self)
+                stateObservers.compact()
+                stateObservers.allObjects.forEach({
+                    ($0 as? SubscriptionStateObserver)?.subscriptionStateDidChangeTotalState?(self)
+                })
             }
         }
     }
@@ -248,6 +302,10 @@ public class SubscriptionState: NSObject {
                 let all = oldValue.union(subscribed)
                 let changed = all.subtracting(common)
                 NotificationCenter.default.post(name: .subscriptionSomeStateDidChange, object: self, userInfo: [ SubscriptionState.subscriptionSomeStateDidChangeProductsKey: Array(changed) ])
+                stateObservers.compact()
+                stateObservers.allObjects.forEach({
+                    ($0 as? SubscriptionStateObserver)?.subscriptionStateDidChangeSomeState?(self)
+                })
             }
             
             totalSubscribed = !subscribed.isEmpty

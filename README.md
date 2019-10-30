@@ -12,6 +12,8 @@ pod 'SubscriptionState'
 
 ### Usage
 
+#### With notification center
+
 ```swift
 
 import SubscriptionState
@@ -30,14 +32,15 @@ class MyCustomSubscriptionService {
         	observers.forEach { NotificationCenter.default.removeObserver($0) }
    	}
 
-	func init() {
+	init() {
 		
 		func updateState() {
 			self.isPremium = SubscriptionState.shared.isSubscriptionActive()
 		}
 		
 		observers = [
-			NotificationCenter.default.addObserver(forName: .subscriptionSomeStateDidChange, 									object: SubscriptionState.shared, queue: .main) { (notification) in
+			NotificationCenter.default.addObserver(forName: .subscriptionSomeStateDidChange, 									
+                            object: SubscriptionState.shared, queue: .main) { (notification) in
 				//let changedProductIdentifiers = notification.userInfo?[SubscriptionState.subscriptionSomeStateDidChangeProductsKey] as? [String]
 				updateState()
 			},
@@ -51,6 +54,51 @@ class MyCustomSubscriptionService {
 		updateState()
 	}
 	
+}
+
+```
+
+#### With observer pattern
+
+```swift
+
+import SubscriptionState
+
+class MyCustomSubscriptionService: NSObject, SubscriptionStateObserver {
+
+    private var observers: [NSObjectProtocol]!
+    
+    var isPremium: Bool = false {
+        didSet {
+            // TODO notify others
+        }
+    }
+            
+    deinit {
+        SubscriptionState.shared.removeObserver(self)
+    }
+
+    override init() {
+        super.init()
+        SubscriptionState.shared.addObserver(self)
+        updateState()
+    }
+    
+    // MARK: - Helpers
+    
+    func updateState() {
+        self.isPremium = SubscriptionState.shared.isSubscriptionActive()
+    }
+
+    // MARK: - SubscriptionStateObserver
+        
+    func subscriptionStateDidChangeTotalState(_ subscriptionState: SubscriptionState) {
+        updateState()
+    }
+        
+    func subscriptionStateDidChangeSomeState(_ subscriptionState: SubscriptionState) {
+        // TODO
+    }
 }
 
 ```

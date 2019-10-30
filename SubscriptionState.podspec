@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                  = "SubscriptionState"
-  s.version               = "1.0.0"
+  s.version               = "1.1.0"
   s.summary               = "iOS subscription tracking"
   s.homepage              = "https://github.com/ladeiko/SubscriptionState"
   s.license               = 'MIT'

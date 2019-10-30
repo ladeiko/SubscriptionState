@@ -15,6 +15,8 @@
 		1235AA5B23460643002CA410 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1235AA5A23460643002CA410 /* Assets.xcassets */; };
 		1235AA5E23460643002CA410 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1235AA5C23460643002CA410 /* LaunchScreen.storyboard */; };
 		1235AA6923460643002CA410 /* SubscriptionStateDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1235AA6823460643002CA410 /* SubscriptionStateDemoTests.swift */; };
+		1237592F236992BD00FBF281 /* CheckSwiftCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1237592E236992BD00FBF281 /* CheckSwiftCompilation.swift */; };
+		12375932236992E300FBF281 /* CheckObjCCompilation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12375931236992E300FBF281 /* CheckObjCCompilation.m */; };
 		124F6D4E234670550023DC7E /* SubscriptionStateDemoTestsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 124F6D4D234670550023DC7E /* SubscriptionStateDemoTestsObjC.m */; };
 		469FDCBE235CDF5EFE3C2CA2 /* Pods_SubscriptionStateDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F96FC802E22B63DB5B20F29 /* Pods_SubscriptionStateDemoTests.framework */; };
 /* End PBXBuildFile section */
@@ -42,6 +44,8 @@
 		1235AA6423460643002CA410 /* SubscriptionStateDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubscriptionStateDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1235AA6823460643002CA410 /* SubscriptionStateDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStateDemoTests.swift; sourceTree = "<group>"; };
 		1235AA6A23460643002CA410 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1237592E236992BD00FBF281 /* CheckSwiftCompilation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSwiftCompilation.swift; sourceTree = "<group>"; };
+		12375931236992E300FBF281 /* CheckObjCCompilation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckObjCCompilation.m; sourceTree = "<group>"; };
 		124F6D4C234670540023DC7E /* SubscriptionStateDemoTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SubscriptionStateDemoTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		124F6D4D234670550023DC7E /* SubscriptionStateDemoTestsObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubscriptionStateDemoTestsObjC.m; sourceTree = "<group>"; };
 		4D0E83C639E347CB3EDD9DE0 /* Pods-SubscriptionStateDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SubscriptionStateDemoTests.release.xcconfig"; path = "Target Support Files/Pods-SubscriptionStateDemoTests/Pods-SubscriptionStateDemoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 			children = (
 				1235AA6823460643002CA410 /* SubscriptionStateDemoTests.swift */,
 				124F6D4D234670550023DC7E /* SubscriptionStateDemoTestsObjC.m */,
+				1237592E236992BD00FBF281 /* CheckSwiftCompilation.swift */,
+				12375931236992E300FBF281 /* CheckObjCCompilation.m */,
 				1235AA6A23460643002CA410 /* Info.plist */,
 				124F6D4C234670540023DC7E /* SubscriptionStateDemoTests-Bridging-Header.h */,
 			);
@@ -315,6 +321,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12375932236992E300FBF281 /* CheckObjCCompilation.m in Sources */,
+				1237592F236992BD00FBF281 /* CheckSwiftCompilation.swift in Sources */,
 				124F6D4E234670550023DC7E /* SubscriptionStateDemoTestsObjC.m in Sources */,
 				1235AA6923460643002CA410 /* SubscriptionStateDemoTests.swift in Sources */,
 			);
