@@ -27,8 +27,8 @@ class MyCustomSubscriptionService {
 	}
 			
 	deinit {
-        observers.forEach { NotificationCenter.default.removeObserver($0) }
-   }
+        	observers.forEach { NotificationCenter.default.removeObserver($0) }
+   	}
 
 	func init() {
 		
